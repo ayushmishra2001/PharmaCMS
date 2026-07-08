@@ -1,0 +1,6 @@
+{
+  "name": "PharmaCMS",
+  "description": "Enterprise Pharmaceutical Website & CMS with interactive product catalogs, careers board, and server-side Gemini AI copilot for medical copy generation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

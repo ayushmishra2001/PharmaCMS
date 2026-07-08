@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-brand-primary: var(--color-blue-slate-500);
+  --color-brand-primary-hover: var(--color-blue-slate-600);
+  --color-brand-secondary: var(--color-jet-black-500);
+  --color-brand-accent: var(--color-light-blue-500);
+
+  /* Light Cyan Palette */
+  --color-light-cyan: #e0fbfc;
+  --color-light-cyan-100: #095456;
+  --color-light-cyan-200: #11a7ad;
+  --color-light-cyan-300: #32e5eb;
+  --color-light-cyan-400: #88f0f3;
+  --color-light-cyan-500: #e0fbfc;
+  --color-light-cyan-600: #e5fcfc;
+  --color-light-cyan-700: #ecfcfd;
+  --color-light-cyan-800: #f2fdfe;
+  --color-light-cyan-900: #f9fefe;
+
+  /* Light Blue Palette */
+  --color-light-blue: #c2dfe3;
+  --color-light-blue-100: #1b363a;
+  --color-light-blue-200: #356d74;
+  --color-light-blue-300: #50a3ae;
+  --color-light-blue-400: #8ac2c9;
+  --color-light-blue-500: #c2dfe3;
+  --color-light-blue-600: #cfe6e9;
+  --color-light-blue-700: #dbecef;
+  --color-light-blue-800: #e7f3f4;
+  --color-light-blue-900: #f3f9fa;
+
+  /* Cool Steel Palette */
+  --color-cool-steel: #9db4c0;
+  --color-cool-steel-100: #1b252a;
+  --color-cool-steel-200: #364a55;
+  --color-cool-steel-300: #516f7f;
+  --color-cool-steel-400: #7192a4;
+  --color-cool-steel-500: #9db4c0;
+  --color-cool-steel-600: #afc2cc;
+  --color-cool-steel-700: #c3d1d9;
+  --color-cool-steel-800: #d7e1e6;
+  --color-cool-steel-900: #ebf0f2;
+
+  /* Blue Slate Palette */
+  --color-blue-slate: #5c6b73;
+  --color-blue-slate-100: #131617;
+  --color-blue-slate-200: #252b2e;
+  --color-blue-slate-300: #384146;
+  --color-blue-slate-400: #4a565d;
+  --color-blue-slate-500: #5c6b73;
+  --color-blue-slate-600: #798b94;
+  --color-blue-slate-700: #9ba8af;
+  --color-blue-slate-800: #bcc5c9;
+  --color-blue-slate-900: #dee2e4;
+
+  /* Jet Black Palette */
+  --color-jet-black: #253237;
+  --color-jet-black-100: #070a0b;
+  --color-jet-black-200: #0f1416;
+  --color-jet-black-300: #161e21;
+  --color-jet-black-400: #1d282c;
+  --color-jet-black-500: #253237;
+  --color-jet-black-600: #465f69;
+  --color-jet-black-700: #688c9b;
+  --color-jet-black-800: #9bb3bc;
+  --color-jet-black-900: #cdd9de;
+  
+  /* Map Standard Slate class hierarchy for full coverage & premium readability */
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #cbd5e1;
+  --color-slate-300: #94a3b8;
+  --color-slate-400: #475569; /* Rich slate gray, high-contrast secondary text */
+  --color-slate-500: #334155; /* Deep slate gray for labels and readable subtexts */
+  --color-slate-600: #1e293b; /* Premium dark slate for body copy */
+  --color-slate-700: #0f172a; /* Ultra-deep slate for high readability headings */
+  --color-slate-800: #020617; /* Near black slate for crucial elements */
+  --color-slate-900: #020617; /* High contrast black slate */
+  --color-slate-950: #000000; /* Pure black */
+
+  /* Map Standard Teal class hierarchy for full accent/brand coverage with perfect visibility */
+  --color-teal-50: #f0fdfa;
+  --color-teal-100: #ccfbf1;
+  --color-teal-200: #99f6e4;
+  --color-teal-300: #2dd4bf;
+  --color-teal-400: #0d9488; /* Professional vibrant teal */
+  --color-teal-500: #0f766e; /* Highly legible rich teal */
+  --color-teal-600: #115e59; /* Very dark teal for high-contrast active items */
+  --color-teal-700: #134e4a; /* Deep navy-teal */
+  --color-teal-800: #0f2d2a;
+  --color-teal-900: #041211;
+  --color-teal-950: #010505;
+  
+  --shadow-custom-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-custom-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-custom-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+}
+
+/* Base resets & animations */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-slate-100); /* Ice blue palette base */
+  color: var(--color-slate-900); /* Gunmetal dark text */
+  min-height: 100vh;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Custom scrollbar for high-density tables */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Custom fading utility */
+.fade-in-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
