@@ -382,10 +382,28 @@ export async function saveSettings(settings: any) {
   return authorizedAction(async () => {
     const supabase = await createClientServer();
     const dbSettings = snakeCase(settings);
-    delete dbSettings.logo_file; // Remove File object that causes postgres column error
-    dbSettings.id = '00000000-0000-0000-0000-000000000000';
     
-    const { error } = await supabase.from('site_settings').upsert(dbSettings);
+    // Whitelist only the columns that actually exist in the PostgreSQL schema
+    const allowedColumns = [
+      'id', 'company_name', 'logo_url', 'tagline', 'contact_email', 'contact_phone', 
+      'address', 'registration_number', 'drug_license_number', 'gst_number', 
+      'map_embed_url', 'ga_id', 'social_links', 'hero_title', 'hero_description', 
+      'metric1_value', 'metric1_label', 'metric2_value', 'metric2_label', 
+      'metric3_value', 'metric3_label', 'metric4_value', 'metric4_label', 
+      'enable_hero_slider', 'hero_slides', 'show_certifications', 'show_facilities', 
+      'show_timeline', 'show_leadership', 'show_gallery', 'seo_title', 
+      'seo_description', 'seo_keywords'
+    ];
+    
+    const safeSettings: any = {};
+    for (const key of allowedColumns) {
+      if (dbSettings[key] !== undefined) {
+        safeSettings[key] = dbSettings[key];
+      }
+    }
+    safeSettings.id = '00000000-0000-0000-0000-000000000000';
+    
+    const { error } = await supabase.from('site_settings').upsert(safeSettings);
     if (!error) {
       await logAction('Updated Site Settings', 'settings', 'SiteSettings');
       revalidatePath('/');
@@ -393,6 +411,7 @@ export async function saveSettings(settings: any) {
       return true;
     }
     console.error(error);
+    try { require('fs').writeFileSync('d:/PharmaCMS/settings_error.log', JSON.stringify({ error, dbSettings }, null, 2)); } catch(e) {}
     return false;
   });
 }
