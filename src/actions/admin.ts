@@ -382,6 +382,7 @@ export async function saveSettings(settings: any) {
   return authorizedAction(async () => {
     const supabase = await createClientServer();
     const dbSettings = snakeCase(settings);
+    delete dbSettings.logo_file; // Remove File object that causes postgres column error
     dbSettings.id = '00000000-0000-0000-0000-000000000000';
     
     const { error } = await supabase.from('site_settings').upsert(dbSettings);
