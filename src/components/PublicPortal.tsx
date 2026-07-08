@@ -1019,7 +1019,7 @@ export default function PublicPortal({
                               className="w-full h-full flex-shrink-0 relative"
                             >
                               <img
-                                src={item.imageUrl}
+                                src={getImgSrc(item.imageUrl)}
                                 alt={item.title}
                                 className="w-full h-full object-cover"
                                 referrerPolicy="no-referrer"
@@ -1352,7 +1352,7 @@ export default function PublicPortal({
                   <div key={milestone.year} className="bg-white rounded-xl p-6 border border-slate-100 shadow-md grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in">
                     <div className="md:col-span-1 bg-slate-950 rounded-lg overflow-hidden relative min-h-[160px] flex items-center justify-center border border-slate-200">
                       <img
-                        src={milestone.imageUrl}
+                        src={getImgSrc(milestone.imageUrl)}
                         alt={milestone.title}
                         className="w-full h-full object-cover opacity-85"
                         referrerPolicy="no-referrer"
@@ -1410,7 +1410,7 @@ export default function PublicPortal({
                   <div key={leader.id} className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
                     <div className="aspect-square bg-slate-100 overflow-hidden relative">
                       <img
-                        src={leader.imageUrl}
+                        src={getImgSrc(leader.imageUrl)}
                         alt={leader.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition duration-200"
                         referrerPolicy="no-referrer"
@@ -2425,7 +2425,7 @@ export default function PublicPortal({
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={lightboxImg}
+              src={getImgSrc(lightboxImg)}
               alt="High resolution production asset preview"
               className="max-h-[75vh] max-w-full object-contain rounded-lg shadow-2xl border border-slate-800/40"
               referrerPolicy="no-referrer"
