@@ -201,7 +201,7 @@ export default function PublicPortal({
     if (!settings?.enableHeroSlider || !settings?.heroSlides || settings.heroSlides.length <= 1) {
       return;
     }
-    const intervalTime = settings.heroSliderInterval || 5000;
+    const intervalTime = settings.heroSliderInterval ?? 5000;
     const interval = setInterval(() => {
       setActiveSlideIdx(prev => (prev + 1) % settings.heroSlides!.length);
     }, intervalTime);
@@ -441,17 +441,17 @@ export default function PublicPortal({
                   
                   {/* Left Column: High-Impact Clinical Copy */}
                   <div className={`${settings.showHomeLabPreview !== false ? 'lg:col-span-7' : 'lg:col-span-12 max-w-4xl mx-auto'} space-y-6 text-left`}>
-                    <div className="inline-flex items-center space-x-2 bg-teal-400/10 text-teal-300 px-3.5 py-1.5 rounded-full text-xs font-mono border border-teal-500/20 shadow-inner">
-                      <ShieldCheck className="h-4 w-4 text-teal-400 animate-pulse" />
-                      <span className="font-semibold tracking-wider uppercase">
-                        {settings.complianceBadgeText || 'WHO-GMP & USFDA ALIGNED COMPLIANCE'}
-                      </span>
-                    </div>
+                    {settings.complianceBadgeText !== "" && (
+                      <div className="inline-flex items-center space-x-2 bg-teal-400/10 text-teal-300 px-3.5 py-1.5 rounded-full text-xs font-mono border border-teal-500/20 shadow-inner">
+                        <ShieldCheck className="h-4 w-4 text-teal-400 animate-pulse" />
+                        <span className="font-semibold tracking-wider uppercase">
+                          {settings.complianceBadgeText ?? 'WHO-GMP & USFDA ALIGNED COMPLIANCE'}
+                        </span>
+                      </div>
+                    )}
 
                     <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
-                      {settings.heroTitle ? (
-                        settings.heroTitle
-                      ) : (
+                      {settings.heroTitle ?? (
                         <>
                           Advancing <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-400 font-black">Therapeutic Science</span> with Clinical Precision
                         </>
@@ -459,31 +459,39 @@ export default function PublicPortal({
                     </h1>
 
                     <p className="max-w-2xl text-sm sm:text-base text-slate-300 leading-relaxed font-sans font-light">
-                      {settings.heroDescription || (
+                      {settings.heroDescription ?? (
                         <>
-                          {settings.companyName || 'Pharmaceutical Enterprise'} is a premier global partner in molecular synthesis and chemical formulations. Inside our Grade A cleanrooms, we synthesize life-saving cardiovascular, neuro-active, and anti-infective formulations under strict USP/BP standards for international medical procurement.
+                          {settings.companyName ?? 'Pharmaceutical Enterprise'} is a premier global partner in molecular synthesis and chemical formulations. Inside our Grade A cleanrooms, we synthesize life-saving cardiovascular, neuro-active, and anti-infective formulations under strict USP/BP standards for international medical procurement.
                         </>
                       )}
                     </p>
 
                     {/* Standard Clinical Trust Matrix */}
                     <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono text-slate-300">
-                      <div className="flex items-center space-x-2 bg-slate-950/40 border border-slate-800/60 p-3 rounded-xl transition duration-150 hover:bg-slate-950/70">
-                        <CheckCircle2 className="h-4 w-4 text-teal-400 shrink-0" />
-                        <span className="font-medium">{settings.heroTrustPoint1 || 'Zone IV Stability Compliant'}</span>
-                      </div>
-                      <div className="flex items-center space-x-2 bg-slate-950/40 border border-slate-800/60 p-3 rounded-xl transition duration-150 hover:bg-slate-950/70">
-                        <CheckCircle2 className="h-4 w-4 text-teal-400 shrink-0" />
-                        <span className="font-medium">{settings.heroTrustPoint2 || 'eCTD Format dossiers ready'}</span>
-                      </div>
-                      <div className="flex items-center space-x-2 bg-slate-950/40 border border-slate-800/60 p-3 rounded-xl transition duration-150 hover:bg-slate-950/70">
-                        <CheckCircle2 className="h-4 w-4 text-teal-400 shrink-0" />
-                        <span className="font-medium">{settings.heroTrustPoint3 || 'HPLC Chromatogram Verified'}</span>
-                      </div>
-                      <div className="flex items-center space-x-2 bg-slate-950/40 border border-slate-800/60 p-3 rounded-xl transition duration-150 hover:bg-slate-950/70">
-                        <CheckCircle2 className="h-4 w-4 text-teal-400 shrink-0" />
-                        <span className="font-medium">{settings.heroTrustPoint4 || 'Pyrogen-Free Cleanrooms'}</span>
-                      </div>
+                      {settings.heroTrustPoint1 !== "" && (
+                        <div className="flex items-center space-x-2 bg-slate-950/40 border border-slate-800/60 p-3 rounded-xl transition duration-150 hover:bg-slate-950/70">
+                          <CheckCircle2 className="h-4 w-4 text-teal-400 shrink-0" />
+                          <span className="font-medium">{settings.heroTrustPoint1 ?? 'Zone IV Stability Compliant'}</span>
+                        </div>
+                      )}
+                      {settings.heroTrustPoint2 !== "" && (
+                        <div className="flex items-center space-x-2 bg-slate-950/40 border border-slate-800/60 p-3 rounded-xl transition duration-150 hover:bg-slate-950/70">
+                          <CheckCircle2 className="h-4 w-4 text-teal-400 shrink-0" />
+                          <span className="font-medium">{settings.heroTrustPoint2 ?? 'eCTD Format dossiers ready'}</span>
+                        </div>
+                      )}
+                      {settings.heroTrustPoint3 !== "" && (
+                        <div className="flex items-center space-x-2 bg-slate-950/40 border border-slate-800/60 p-3 rounded-xl transition duration-150 hover:bg-slate-950/70">
+                          <CheckCircle2 className="h-4 w-4 text-teal-400 shrink-0" />
+                          <span className="font-medium">{settings.heroTrustPoint3 ?? 'HPLC Chromatogram Verified'}</span>
+                        </div>
+                      )}
+                      {settings.heroTrustPoint4 !== "" && (
+                        <div className="flex items-center space-x-2 bg-slate-950/40 border border-slate-800/60 p-3 rounded-xl transition duration-150 hover:bg-slate-950/70">
+                          <CheckCircle2 className="h-4 w-4 text-teal-400 shrink-0" />
+                          <span className="font-medium">{settings.heroTrustPoint4 ?? 'Pyrogen-Free Cleanrooms'}</span>
+                        </div>
+                      )}
                     </div>
 
                     <div className="pt-6 flex flex-wrap gap-4">
@@ -522,7 +530,7 @@ export default function PublicPortal({
                         {/* Interactive Tabs */}
                         <div className="flex justify-between border-b border-slate-800 pb-3 mb-4">
                           <span className="text-[10px] font-mono font-bold tracking-wider text-teal-400 flex items-center uppercase">
-                            <FlaskConical className="h-3.5 w-3.5 mr-1.5 animate-pulse text-teal-400" /> {settings.labTitle || 'MOLECULAR LAB SPECIMEN'}
+                            <FlaskConical className="h-3.5 w-3.5 mr-1.5 animate-pulse text-teal-400" /> {settings.labTitle ?? 'MOLECULAR LAB SPECIMEN'}
                           </span>
                           <div className="flex space-x-1 bg-slate-900 p-1 rounded-lg border border-slate-800">
                             <button
@@ -553,19 +561,19 @@ export default function PublicPortal({
                         </div>
 
                         {/* Display Data based on tab */}
-                        {spotlightClass === 'cardio' && (
+                        {spotlightClass === 'cardio' && settings.labCardioTitle !== "" && (
                           <div className="space-y-4 animate-fadeIn">
                             <div className="flex justify-between items-start">
                               <div>
                                 <span className="text-[9px] font-mono font-bold text-teal-400 uppercase tracking-wide">Interactive Specimen</span>
-                                <h3 className="text-md font-bold text-white tracking-wide">{settings.labCardioTitle || 'CardioVance XR Duo'}</h3>
+                                <h3 className="text-md font-bold text-white tracking-wide">{settings.labCardioTitle ?? 'CardioVance XR Duo'}</h3>
                               </div>
-                              <span className="bg-emerald-500/15 text-emerald-300 border border-emerald-500/20 px-2 py-0.5 rounded font-mono text-[9px]">{settings.labCardioStatus || 'API Approved'}</span>
+                              <span className="bg-emerald-500/15 text-emerald-300 border border-emerald-500/20 px-2 py-0.5 rounded font-mono text-[9px]">{settings.labCardioStatus ?? 'API Approved'}</span>
                             </div>
 
                             {/* Dynamic molecular schematic (SVG) */}
                             <div className="h-24 bg-slate-900 rounded-xl flex items-center justify-center border border-slate-800 relative">
-                              <div className="absolute top-2 left-3 text-[8px] font-mono text-slate-500">{settings.labCardioStructure || 'Amlodipine Besylate Ring Structure'}</div>
+                              <div className="absolute top-2 left-3 text-[8px] font-mono text-slate-500">{settings.labCardioStructure ?? 'Amlodipine Besylate Ring Structure'}</div>
                               <svg className="w-40 h-16 text-teal-400" viewBox="0 0 200 80">
                                 <line x1="20" y1="40" x2="50" y2="20" stroke="currentColor" strokeWidth="2" strokeDasharray="3,3" />
                                 <line x1="50" y1="20" x2="80" y2="40" stroke="currentColor" strokeWidth="2" />
@@ -586,37 +594,37 @@ export default function PublicPortal({
                             <div className="grid grid-cols-2 gap-3 text-xs font-mono">
                               <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
                                 <div className="text-slate-500 text-[8px] uppercase tracking-wider">ACTIVE INGREDIENT</div>
-                                <div className="text-slate-200 mt-0.5 truncate font-semibold">{settings.labCardioActive || 'Amlodipine Besylate'}</div>
+                                <div className="text-slate-200 mt-0.5 truncate font-semibold">{settings.labCardioActive ?? 'Amlodipine Besylate'}</div>
                               </div>
                               <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
                                 <div className="text-slate-500 text-[8px] uppercase tracking-wider">EMPIRICAL FORMULA</div>
-                                <div className="text-slate-200 mt-0.5 font-semibold">{settings.labCardioFormula || 'C20H25ClN2O5'}</div>
+                                <div className="text-slate-200 mt-0.5 font-semibold">{settings.labCardioFormula ?? 'C20H25ClN2O5'}</div>
                               </div>
                               <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
                                 <div className="text-slate-500 text-[8px] uppercase tracking-wider">DISINTEGRATION RATE</div>
-                                <div className="text-teal-400 mt-0.5 font-bold">{settings.labCardioDisintegration || '4.2 min (Limit < 15m)'}</div>
+                                <div className="text-teal-400 mt-0.5 font-bold">{settings.labCardioDisintegration ?? '4.2 min (Limit < 15m)'}</div>
                               </div>
                               <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
                                 <div className="text-slate-500 text-[8px] uppercase tracking-wider">CHROMATOGRAPHY VALUE</div>
-                                <div className="text-teal-400 mt-0.5 font-bold">{settings.labCardioChroma || '99.91% Purified'}</div>
+                                <div className="text-teal-400 mt-0.5 font-bold">{settings.labCardioChroma ?? '99.91% Purified'}</div>
                               </div>
                             </div>
                           </div>
                         )}
 
-                        {spotlightClass === 'anti_infective' && (
+                        {spotlightClass === 'anti_infective' && settings.labAntibioticTitle !== "" && (
                           <div className="space-y-4 animate-fadeIn">
                             <div className="flex justify-between items-start">
                               <div>
                                 <span className="text-[9px] font-mono font-bold text-teal-400 uppercase tracking-wide">Interactive Specimen</span>
-                                <h3 className="text-md font-bold text-white tracking-wide">{settings.labAntibioticTitle || 'ZithroMax Duo'}</h3>
+                                <h3 className="text-md font-bold text-white tracking-wide">{settings.labAntibioticTitle ?? 'ZithroMax Duo'}</h3>
                               </div>
-                              <span className="bg-emerald-500/15 text-emerald-300 border border-emerald-500/20 px-2 py-0.5 rounded font-mono text-[9px]">{settings.labAntibioticStatus || 'API Approved'}</span>
+                              <span className="bg-emerald-500/15 text-emerald-300 border border-emerald-500/20 px-2 py-0.5 rounded font-mono text-[9px]">{settings.labAntibioticStatus ?? 'API Approved'}</span>
                             </div>
 
                             {/* Dynamic molecular schematic (SVG) */}
                             <div className="h-24 bg-slate-900 rounded-xl flex items-center justify-center border border-slate-800 relative">
-                              <div className="absolute top-2 left-3 text-[8px] font-mono text-slate-500">{settings.labAntibioticStructure || 'Azithromycin Aromatic Macrocyclic Loop'}</div>
+                              <div className="absolute top-2 left-3 text-[8px] font-mono text-slate-500">{settings.labAntibioticStructure ?? 'Azithromycin Aromatic Macrocyclic Loop'}</div>
                               <svg className="w-40 h-16 text-emerald-400" viewBox="0 0 200 80">
                                 <path d="M 50,40 L 70,20 L 100,20 L 120,40 L 100,60 L 70,60 Z" fill="none" stroke="currentColor" strokeWidth="2" />
                                 <path d="M 120,40 L 140,25 L 160,40 L 150,60 Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2,2" />
@@ -636,37 +644,37 @@ export default function PublicPortal({
                             <div className="grid grid-cols-2 gap-3 text-xs font-mono">
                               <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
                                 <div className="text-slate-500 text-[8px] uppercase tracking-wider">ACTIVE INGREDIENT</div>
-                                <div className="text-slate-200 mt-0.5 truncate font-semibold">{settings.labAntibioticActive || 'Azithromycin Dihydrate'}</div>
+                                <div className="text-slate-200 mt-0.5 truncate font-semibold">{settings.labAntibioticActive ?? 'Azithromycin Dihydrate'}</div>
                               </div>
                               <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
                                 <div className="text-slate-500 text-[8px] uppercase tracking-wider">EMPIRICAL FORMULA</div>
-                                <div className="text-slate-200 mt-0.5 font-semibold">{settings.labAntibioticFormula || 'C38H72N2O12 • 2H2O'}</div>
+                                <div className="text-slate-200 mt-0.5 font-semibold">{settings.labAntibioticFormula ?? 'C38H72N2O12 • 2H2O'}</div>
                               </div>
                               <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
                                 <div className="text-slate-500 text-[8px] uppercase tracking-wider">DISINTEGRATION RATE</div>
-                                <div className="text-teal-400 mt-0.5 font-bold">{settings.labAntibioticDisintegration || '7.1 min (Limit < 15m)'}</div>
+                                <div className="text-teal-400 mt-0.5 font-bold">{settings.labAntibioticDisintegration ?? '7.1 min (Limit < 15m)'}</div>
                               </div>
                               <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
                                 <div className="text-slate-500 text-[8px] uppercase tracking-wider">CHROMATOGRAPHY VALUE</div>
-                                <div className="text-teal-400 mt-0.5 font-bold">{settings.labAntibioticChroma || '99.85% EP Certified'}</div>
+                                <div className="text-teal-400 mt-0.5 font-bold">{settings.labAntibioticChroma ?? '99.85% EP Certified'}</div>
                               </div>
                             </div>
                           </div>
                         )}
 
-                        {spotlightClass === 'neuro' && (
+                        {spotlightClass === 'neuro' && settings.labNeuroTitle !== "" && (
                           <div className="space-y-4 animate-fadeIn">
                             <div className="flex justify-between items-start">
                               <div>
                                 <span className="text-[9px] font-mono font-bold text-teal-400 uppercase tracking-wide">Interactive Specimen</span>
-                                <h3 className="text-md font-bold text-white tracking-wide">{settings.labNeuroTitle || 'SeroQuell Depot'}</h3>
+                                <h3 className="text-md font-bold text-white tracking-wide">{settings.labNeuroTitle ?? 'SeroQuell Depot'}</h3>
                               </div>
-                              <span className="bg-emerald-500/15 text-emerald-300 border border-emerald-500/20 px-2 py-0.5 rounded font-mono text-[9px]">{settings.labNeuroStatus || 'API Approved'}</span>
+                              <span className="bg-emerald-500/15 text-emerald-300 border border-emerald-500/20 px-2 py-0.5 rounded font-mono text-[9px]">{settings.labNeuroStatus ?? 'API Approved'}</span>
                             </div>
 
                             {/* Dynamic molecular schematic (SVG) */}
                             <div className="h-24 bg-slate-900 rounded-xl flex items-center justify-center border border-slate-800 relative">
-                              <div className="absolute top-2 left-3 text-[8px] font-mono text-slate-500">{settings.labNeuroStructure || 'Quetiapine Dibenzothiazepine Core'}</div>
+                              <div className="absolute top-2 left-3 text-[8px] font-mono text-slate-500">{settings.labNeuroStructure ?? 'Quetiapine Dibenzothiazepine Core'}</div>
                               <svg className="w-40 h-16 text-amber-400" viewBox="0 0 200 80">
                                 <polygon points="30,40 50,25 70,40 60,60 40,60" fill="none" stroke="currentColor" strokeWidth="2" />
                                 <polygon points="70,40 90,25 110,40 100,60 80,60" fill="none" stroke="currentColor" strokeWidth="1.5" />
@@ -687,35 +695,41 @@ export default function PublicPortal({
                             <div className="grid grid-cols-2 gap-3 text-xs font-mono">
                               <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
                                 <div className="text-slate-500 text-[8px] uppercase tracking-wider">ACTIVE INGREDIENT</div>
-                                <div className="text-slate-200 mt-0.5 truncate font-semibold">{settings.labNeuroActive || 'Quetiapine Fumarate'}</div>
+                                <div className="text-slate-200 mt-0.5 truncate font-semibold">{settings.labNeuroActive ?? 'Quetiapine Fumarate'}</div>
                               </div>
                               <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
                                 <div className="text-slate-500 text-[8px] uppercase tracking-wider">EMPIRICAL FORMULA</div>
-                                <div className="text-slate-200 mt-0.5 font-semibold">{settings.labNeuroFormula || '(C21H25N3O2S)2'}</div>
+                                <div className="text-slate-200 mt-0.5 font-semibold">{settings.labNeuroFormula ?? '(C21H25N3O2S)2'}</div>
                               </div>
                               <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
                                 <div className="text-slate-500 text-[8px] uppercase tracking-wider">DISINTEGRATION RATE</div>
-                                <div className="text-teal-400 mt-0.5 font-bold">{settings.labNeuroDisintegration || '5.8 min (Limit < 15m)'}</div>
+                                <div className="text-teal-400 mt-0.5 font-bold">{settings.labNeuroDisintegration ?? '5.8 min (Limit < 15m)'}</div>
                               </div>
                               <div className="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800">
                                 <div className="text-slate-500 text-[8px] uppercase tracking-wider">CHROMATOGRAPHY VALUE</div>
-                                <div className="text-teal-400 mt-0.5 font-bold">{settings.labNeuroChroma || '99.88% BP/USP Certified'}</div>
+                                <div className="text-teal-400 mt-0.5 font-bold">{settings.labNeuroChroma ?? '99.88% BP/USP Certified'}</div>
                               </div>
                             </div>
                           </div>
                         )}
 
                         {/* Floating mini lab telemetry */}
-                        <div className="pt-4 border-t border-slate-800/80 flex justify-between items-center text-[10px] font-mono text-slate-400">
-                          <div className="flex items-center">
-                            <span className="inline-block h-2 w-2 rounded-full bg-teal-400 mr-2 animate-pulse"></span>
-                            <span>{settings.labSterilityText || 'HEPA STERILITY: CLASS 100'}</span>
+                        {(settings.labSterilityText !== "" || settings.labTemperature !== "") && (
+                          <div className="pt-4 border-t border-slate-800/80 flex justify-between items-center text-[10px] font-mono text-slate-400">
+                            {settings.labSterilityText !== "" && (
+                              <div className="flex items-center">
+                                <span className="inline-block h-2 w-2 rounded-full bg-teal-400 mr-2 animate-pulse"></span>
+                                <span>{settings.labSterilityText ?? 'HEPA STERILITY: CLASS 100'}</span>
+                              </div>
+                            )}
+                            {settings.labTemperature !== "" && (
+                              <div className="flex items-center space-x-2">
+                                <Thermometer className="h-3.5 w-3.5 text-slate-500" />
+                                <span>{settings.labTemperature ?? '18.2'} °C</span>
+                              </div>
+                            )}
                           </div>
-                          <div className="flex items-center space-x-2">
-                            <Thermometer className="h-3.5 w-3.5 text-slate-500" />
-                            <span>{settings.labTemperature || '18.2'} °C</span>
-                          </div>
-                        </div>
+                        )}
                       </div>
                     </div>
                   )}
@@ -745,62 +759,67 @@ export default function PublicPortal({
             {settings.showHomeMetrics !== false && (
               <div className="bg-white border-b border-slate-200 py-10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  <div className="text-center mb-6">
-                    <span className="text-[10px] font-mono font-bold tracking-wider text-slate-400 uppercase">OPERATIONAL CAPACITY METRICS</span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                  <div className="flex flex-wrap justify-center gap-6">
                     
-                    <div className="p-5 bg-slate-50/50 rounded-xl border border-slate-200 relative group overflow-hidden">
-                      <div className="absolute right-3 top-3 p-1.5 bg-teal-100/50 rounded-lg text-teal-600">
-                        <Award className="h-5 w-5" />
+                    {(settings.metric1Value !== "" || settings.metric1Label !== "") && (
+                      <div className="w-full sm:w-[calc(50%-0.75rem)] md:flex-1 md:min-w-[220px] max-w-sm p-5 bg-slate-50/50 rounded-xl border border-slate-200 relative group overflow-hidden">
+                        <div className="absolute right-3 top-3 p-1.5 bg-teal-100/50 rounded-lg text-teal-600">
+                          <Award className="h-5 w-5" />
+                        </div>
+                        <div className="font-display text-2xl font-black text-teal-600">{settings.metric1Value ?? 'WHO-GMP'}</div>
+                        <div className="text-[11px] text-slate-500 mt-1 uppercase tracking-wider font-semibold">{settings.metric1Label ?? 'Manufacturing Standard'}</div>
+                        {/* Micro capacity status indicator */}
+                        <div className="mt-4 pt-3 border-t border-slate-200/60 text-[10px] font-mono text-slate-400 flex justify-between">
+                          <span>Validation Logs:</span>
+                          <span className="text-teal-600 font-bold">100% Passed</span>
+                        </div>
                       </div>
-                      <div className="font-display text-2xl font-black text-teal-600">{settings.metric1Value || 'WHO-GMP'}</div>
-                      <div className="text-[11px] text-slate-500 mt-1 uppercase tracking-wider font-semibold">{settings.metric1Label || 'Manufacturing Standard'}</div>
-                      {/* Micro capacity status indicator */}
-                      <div className="mt-4 pt-3 border-t border-slate-200/60 text-[10px] font-mono text-slate-400 flex justify-between">
-                        <span>Validation Logs:</span>
-                        <span className="text-teal-600 font-bold">100% Passed</span>
-                      </div>
-                    </div>
+                    )}
 
-                    <div className="p-5 bg-slate-50/50 rounded-xl border border-slate-200 relative group overflow-hidden">
-                      <div className="absolute right-3 top-3 p-1.5 bg-slate-200/60 rounded-lg text-slate-700">
-                        <Activity className="h-5 w-5" />
+                    {(settings.metric2Value !== "" || settings.metric2Label !== "") && (
+                      <div className="w-full sm:w-[calc(50%-0.75rem)] md:flex-1 md:min-w-[220px] max-w-sm p-5 bg-slate-50/50 rounded-xl border border-slate-200 relative group overflow-hidden">
+                        <div className="absolute right-3 top-3 p-1.5 bg-slate-200/60 rounded-lg text-slate-700">
+                          <Activity className="h-5 w-5" />
+                        </div>
+                        <div className="font-display text-2xl font-black text-slate-900">{settings.metric2Value ?? '15M+'}</div>
+                        <div className="text-[11px] text-slate-500 mt-1 uppercase tracking-wider font-semibold">{settings.metric2Label ?? 'Daily Tablet Output'}</div>
+                        {/* Micro capacity status indicator */}
+                        <div className="mt-4 pt-3 border-t border-slate-200/60 text-[10px] font-mono text-slate-400 flex justify-between">
+                          <span>Active lines:</span>
+                          <span className="text-slate-800 font-bold">24/7 Monitored</span>
+                        </div>
                       </div>
-                      <div className="font-display text-2xl font-black text-slate-900">{settings.metric2Value || '15M+'}</div>
-                      <div className="text-[11px] text-slate-500 mt-1 uppercase tracking-wider font-semibold">{settings.metric2Label || 'Daily Tablet Output'}</div>
-                      {/* Micro capacity status indicator */}
-                      <div className="mt-4 pt-3 border-t border-slate-200/60 text-[10px] font-mono text-slate-400 flex justify-between">
-                        <span>Active lines:</span>
-                        <span className="text-slate-800 font-bold">24/7 Monitored</span>
-                      </div>
-                    </div>
+                    )}
 
-                    <div className="p-5 bg-slate-50/50 rounded-xl border border-slate-200 relative group overflow-hidden">
-                      <div className="absolute right-3 top-3 p-1.5 bg-slate-200/60 rounded-lg text-slate-700">
-                        <FlaskConical className="h-5 w-5" />
+                    {(settings.metric3Value !== "" || settings.metric3Label !== "") && (
+                      <div className="w-full sm:w-[calc(50%-0.75rem)] md:flex-1 md:min-w-[220px] max-w-sm p-5 bg-slate-50/50 rounded-xl border border-slate-200 relative group overflow-hidden">
+                        <div className="absolute right-3 top-3 p-1.5 bg-slate-200/60 rounded-lg text-slate-700">
+                          <FlaskConical className="h-5 w-5" />
+                        </div>
+                        <div className="font-display text-2xl font-black text-slate-900">{settings.metric3Value ?? '50+'}</div>
+                        <div className="text-[11px] text-slate-500 mt-1 uppercase tracking-wider font-semibold">{settings.metric3Label ?? 'Global Formulations'}</div>
+                        {/* Micro capacity status indicator */}
+                        <div className="mt-4 pt-3 border-t border-slate-200/60 text-[10px] font-mono text-slate-400 flex justify-between">
+                          <span>Active APIs:</span>
+                          <span className="text-slate-800 font-bold">EP/USP Grade</span>
+                        </div>
                       </div>
-                      <div className="font-display text-2xl font-black text-slate-900">{settings.metric3Value || '50+'}</div>
-                      <div className="text-[11px] text-slate-500 mt-1 uppercase tracking-wider font-semibold">{settings.metric3Label || 'Global Formulations'}</div>
-                      {/* Micro capacity status indicator */}
-                      <div className="mt-4 pt-3 border-t border-slate-200/60 text-[10px] font-mono text-slate-400 flex justify-between">
-                        <span>Active APIs:</span>
-                        <span className="text-slate-800 font-bold">EP/USP Grade</span>
-                      </div>
-                    </div>
+                    )}
 
-                    <div className="p-5 bg-slate-50/50 rounded-xl border border-slate-200 relative group overflow-hidden">
-                      <div className="absolute right-3 top-3 p-1.5 bg-teal-100/50 rounded-lg text-teal-600">
-                        <ShieldCheck className="h-5 w-5" />
+                    {(settings.metric4Value !== "" || settings.metric4Label !== "") && (
+                      <div className="w-full sm:w-[calc(50%-0.75rem)] md:flex-1 md:min-w-[220px] max-w-sm p-5 bg-slate-50/50 rounded-xl border border-slate-200 relative group overflow-hidden">
+                        <div className="absolute right-3 top-3 p-1.5 bg-teal-100/50 rounded-lg text-teal-600">
+                          <ShieldCheck className="h-5 w-5" />
+                        </div>
+                        <div className="font-display text-2xl font-black text-teal-600">{settings.metric4Value ?? 'Zone I-IV'}</div>
+                        <div className="text-[11px] text-slate-500 mt-1 uppercase tracking-wider font-semibold">{settings.metric4Label ?? 'Stability Compliant'}</div>
+                        {/* Micro capacity status indicator */}
+                        <div className="mt-4 pt-3 border-t border-slate-200/60 text-[10px] font-mono text-slate-400 flex justify-between">
+                          <span>Relative Humidity:</span>
+                          <span className="text-teal-600 font-bold">20% RH Aligned</span>
+                        </div>
                       </div>
-                      <div className="font-display text-2xl font-black text-teal-600">{settings.metric4Value || 'Zone I-IV'}</div>
-                      <div className="text-[11px] text-slate-500 mt-1 uppercase tracking-wider font-semibold">{settings.metric4Label || 'Stability Compliant'}</div>
-                      {/* Micro capacity status indicator */}
-                      <div className="mt-4 pt-3 border-t border-slate-200/60 text-[10px] font-mono text-slate-400 flex justify-between">
-                        <span>Relative Humidity:</span>
-                        <span className="text-teal-600 font-bold">20% RH Aligned</span>
-                      </div>
-                    </div>
+                    )}
 
                   </div>
                 </div>
@@ -811,14 +830,16 @@ export default function PublicPortal({
             {settings.showHomeFeatured !== false && (
               <div className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-12">
-                  <span className="text-[11px] font-mono font-bold tracking-wider text-teal-600 bg-teal-50 px-3 py-1 rounded-full border border-teal-100">
-                    {settings.featuredBadgeText || 'ATC THERAPEUTIC CLASSIFICATION'}
-                  </span>
+                  {settings.featuredBadgeText !== "" && (
+                    <span className="text-[11px] font-mono font-bold tracking-wider text-teal-600 bg-teal-50 px-3 py-1 rounded-full border border-teal-100">
+                      {settings.featuredBadgeText ?? 'ATC THERAPEUTIC CLASSIFICATION'}
+                    </span>
+                  )}
                   <h2 className="font-display text-3xl font-extrabold tracking-tight text-slate-900 mt-4">
-                    {settings.featuredTitle || 'Featured Pharmaceutical Monographs'}
+                    {settings.featuredTitle ?? 'Featured Pharmaceutical Monographs'}
                   </h2>
                   <p className="mt-2 text-xs sm:text-sm text-slate-500 max-w-2xl mx-auto">
-                    {settings.featuredDesc || 'Therapeutic compositions manufactured inside our sterile containment blocks. High-bioavailability drug release logs verified via analytical laboratory assays.'}
+                    {settings.featuredDesc ?? 'Therapeutic compositions manufactured inside our sterile containment blocks. High-bioavailability drug release logs verified via analytical laboratory assays.'}
                   </p>
                 </div>
 
@@ -1127,46 +1148,56 @@ export default function PublicPortal({
                 }`}>
                   {settings.showHomeRegulatory !== false && (
                     <div className={settings.showHomeDistributor === false ? 'max-w-3xl w-full' : 'lg:col-span-6'}>
-                      <div className="inline-flex items-center space-x-1.5 bg-amber-500/10 text-amber-400 px-3 py-1 rounded-full text-xs font-mono mb-4 border border-amber-500/20">
-                        <Award className="h-3.5 w-3.5 text-amber-400 animate-pulse" />
-                        <span>{settings.regulatoryBadgeText || 'STABILITY TESTED CLIMATIC ZONE IV'}</span>
-                      </div>
+                      {settings.regulatoryBadgeText !== "" && (
+                        <div className="inline-flex items-center space-x-1.5 bg-amber-500/10 text-amber-400 px-3 py-1 rounded-full text-xs font-mono mb-4 border border-amber-500/20">
+                          <Award className="h-3.5 w-3.5 text-amber-400 animate-pulse" />
+                          <span>{settings.regulatoryBadgeText ?? 'STABILITY TESTED CLIMATIC ZONE IV'}</span>
+                        </div>
+                      )}
                       <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight">
-                        {settings.regulatoryTitle || 'World-Class Regulatory Dossier Delivery'}
+                        {settings.regulatoryTitle ?? 'World-Class Regulatory Dossier Delivery'}
                       </h2>
                       <p className="mt-4 text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
-                        {settings.regulatoryDesc || 'Every batch fabricated in our formulation plants is supported by exhaustive dossier frameworks, conforming with global Common Technical Document (CTD) formats. This guarantees seamless regulatory filings in EU, LATAM, Middle East, and Asia.'}
+                        {settings.regulatoryDesc ?? 'Every batch fabricated in our formulation plants is supported by exhaustive dossier frameworks, conforming with global Common Technical Document (CTD) formats. This guarantees seamless regulatory filings in EU, LATAM, Middle East, and Asia.'}
                       </p>
                       
                       <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="flex items-start space-x-3">
-                          <CheckCircle2 className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
-                          <div>
-                            <h4 className="text-xs font-bold font-mono">{settings.regulatoryFeature1Title || 'CTD/eCTD Formatting'}</h4>
-                            <p className="text-[11px] text-slate-400 mt-0.5">{settings.regulatoryFeature1Desc || 'Ready for filing and clinical registration'}</p>
+                        {(settings.regulatoryFeature1Title !== "" || settings.regulatoryFeature1Desc !== "") && (
+                          <div className="flex items-start space-x-3">
+                            <CheckCircle2 className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
+                            <div>
+                              <h4 className="text-xs font-bold font-mono">{settings.regulatoryFeature1Title ?? 'CTD/eCTD Formatting'}</h4>
+                              <p className="text-[11px] text-slate-400 mt-0.5">{settings.regulatoryFeature1Desc ?? 'Ready for filing and clinical registration'}</p>
+                            </div>
                           </div>
-                        </div>
-                        <div className="flex items-start space-x-3">
-                          <CheckCircle2 className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
-                          <div>
-                            <h4 className="text-xs font-bold font-mono">{settings.regulatoryFeature2Title || 'COA Stability Logs'}</h4>
-                            <p className="text-[11px] text-slate-400 mt-0.5">{settings.regulatoryFeature2Desc || 'Zone IV standard long-term documentation'}</p>
+                        )}
+                        {(settings.regulatoryFeature2Title !== "" || settings.regulatoryFeature2Desc !== "") && (
+                          <div className="flex items-start space-x-3">
+                            <CheckCircle2 className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
+                            <div>
+                              <h4 className="text-xs font-bold font-mono">{settings.regulatoryFeature2Title ?? 'COA Stability Logs'}</h4>
+                              <p className="text-[11px] text-slate-400 mt-0.5">{settings.regulatoryFeature2Desc ?? 'Zone IV standard long-term documentation'}</p>
+                            </div>
                           </div>
-                        </div>
-                        <div className="flex items-start space-x-3">
-                          <CheckCircle2 className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
-                          <div>
-                            <h4 className="text-xs font-bold font-mono">{settings.regulatoryFeature3Title || 'Impurity Profiling'}</h4>
-                            <p className="text-[11px] text-slate-400 mt-0.5">{settings.regulatoryFeature3Desc || 'High-accuracy chromatography verified'}</p>
+                        )}
+                        {(settings.regulatoryFeature3Title !== "" || settings.regulatoryFeature3Desc !== "") && (
+                          <div className="flex items-start space-x-3">
+                            <CheckCircle2 className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
+                            <div>
+                              <h4 className="text-xs font-bold font-mono">{settings.regulatoryFeature3Title ?? 'Impurity Profiling'}</h4>
+                              <p className="text-[11px] text-slate-400 mt-0.5">{settings.regulatoryFeature3Desc ?? 'High-accuracy chromatography verified'}</p>
+                            </div>
                           </div>
-                        </div>
-                        <div className="flex items-start space-x-3">
-                          <CheckCircle2 className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
-                          <div>
-                            <h4 className="text-xs font-bold font-mono">{settings.regulatoryFeature4Title || 'Clean-Room Validation'}</h4>
-                            <p className="text-[11px] text-slate-400 mt-0.5">{settings.regulatoryFeature4Desc || 'Grade A/B laminar HVAC logs included'}</p>
+                        )}
+                        {(settings.regulatoryFeature4Title !== "" || settings.regulatoryFeature4Desc !== "") && (
+                          <div className="flex items-start space-x-3">
+                            <CheckCircle2 className="h-5 w-5 text-teal-400 shrink-0 mt-0.5" />
+                            <div>
+                              <h4 className="text-xs font-bold font-mono">{settings.regulatoryFeature4Title ?? 'Clean-Room Validation'}</h4>
+                              <p className="text-[11px] text-slate-400 mt-0.5">{settings.regulatoryFeature4Desc ?? 'Grade A/B laminar HVAC logs included'}</p>
+                            </div>
                           </div>
-                        </div>
+                        )}
                       </div>
                     </div>
                   )}
@@ -1176,10 +1207,10 @@ export default function PublicPortal({
                       settings.showHomeRegulatory === false ? 'max-w-2xl w-full' : ''
                     }`}>
                       <h3 className="font-display text-lg font-bold text-white mb-4 flex items-center tracking-wide">
-                        <Mail className="h-5 w-5 text-teal-400 mr-2" /> {settings.distributorTitle || 'Global Distributor Application'}
+                        <Mail className="h-5 w-5 text-teal-400 mr-2" /> {settings.distributorTitle ?? 'Global Distributor Application'}
                       </h3>
                       <p className="text-xs text-slate-400 font-light mb-6">
-                        {settings.distributorDesc || 'Submit your regional therapeutic requirements to request active COA batch dossiers, stability files, and wholesale quotation schedules.'}
+                        {settings.distributorDesc ?? 'Submit your regional therapeutic requirements to request active COA batch dossiers, stability files, and wholesale quotation schedules.'}
                       </p>
                       
                       {distributorSuccess ? (
@@ -1696,7 +1727,7 @@ export default function PublicPortal({
                             {productSuccess ? (
                               <div className="bg-white border border-emerald-100 rounded-2xl p-8 text-center animate-fade-in shadow-sm">
                                 <CheckCircle2 className="h-12 w-12 text-emerald-600 mx-auto mb-3.5" />
-                                <h5 className="text-sm font-bold text-slate-900">Inquiry Logged inside {settings.companyName || 'Pharmaceutical Enterprise'} CMS</h5>
+                                <h5 className="text-sm font-bold text-slate-900">Inquiry Logged inside {settings.companyName ?? 'Pharmaceutical Enterprise'} CMS</h5>
                                 <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">Our export compliance head will email you the full technical monograph files and dossier packages.</p>
                               </div>
                             ) : (
@@ -1948,7 +1979,7 @@ export default function PublicPortal({
             <div className="text-center max-w-2xl mx-auto mb-12">
               <h1 className="font-display text-2xl font-bold text-slate-900">Regulatory Compliance & Certifications</h1>
               <p className="text-xs text-slate-500 mt-2">
-                {settings.companyName || 'Pharmaceutical Enterprise'} operations are verified by international licensing agencies. We hold active registrations for exports worldwide.
+                {settings.companyName ?? 'Pharmaceutical Enterprise'} operations are verified by international licensing agencies. We hold active registrations for exports worldwide.
               </p>
             </div>
 
@@ -1983,35 +2014,45 @@ export default function PublicPortal({
             </div>
 
             {/* QA Methodology block */}
-            <div className="bg-slate-900 text-white rounded-xl p-8 sm:p-10 mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-1 border-r border-slate-800 pr-0 lg:pr-8">
-                <h3 className="font-display text-lg font-bold">Standard GMP Quality Testing Routine</h3>
-                <p className="text-xs text-slate-400 mt-2 font-light">
-                  Our quality control lab performs rigorous assessment parameters before releasing any raw pharmaceutical materials or final formulations.
-                </p>
-                <div className="text-xs text-teal-400 font-mono mt-6 flex items-center">
-                  <Activity className="h-4 w-4 mr-1.5 animate-pulse" /> 100% TESTING COMPLIANCE LOGS
+            {settings.qaTitle !== "" && (
+              <div className="bg-slate-900 text-white rounded-xl p-8 sm:p-10 mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-1 border-r border-slate-800 pr-0 lg:pr-8">
+                  <h3 className="font-display text-lg font-bold">{settings.qaTitle ?? 'Standard GMP Quality Testing Routine'}</h3>
+                  <p className="text-xs text-slate-400 mt-2 font-light">
+                    {settings.qaDesc ?? 'Our quality control lab performs rigorous assessment parameters before releasing any raw pharmaceutical materials or final formulations.'}
+                  </p>
+                  {settings.qaBadge !== "" && (
+                    <div className="text-xs text-teal-400 font-mono mt-6 flex items-center">
+                      <Activity className="h-4 w-4 mr-1.5 animate-pulse" /> {settings.qaBadge ?? '100% TESTING COMPLIANCE LOGS'}
+                    </div>
+                  )}
                 </div>
-              </div>
 
-              <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs">
-                <div className="space-y-2">
-                  <span className="text-slate-500 font-mono text-[10px] uppercase font-bold">Phase 1: Input Testing</span>
-                  <h4 className="font-bold text-white">Raw Material Assay</h4>
-                  <p className="text-slate-400 text-[11px] font-light">High performance liquid chromatography validation of incoming active ingredients (APIs).</p>
-                </div>
-                <div className="space-y-2 border-l border-slate-800 pl-0 sm:pl-6">
-                  <span className="text-slate-500 font-mono text-[10px] uppercase font-bold">Phase 2: In-Process Control</span>
-                  <h4 className="font-bold text-white">Disintegration & Hardness</h4>
-                  <p className="text-slate-400 text-[11px] font-light">In-line dissolution logging of tablets and vials every 30 minutes inside manufacturing bays.</p>
-                </div>
-                <div className="space-y-2 border-l border-slate-800 pl-0 sm:pl-6">
-                  <span className="text-slate-500 font-mono text-[10px] uppercase font-bold">Phase 3: Final Release</span>
-                  <h4 className="font-bold text-white">Stability & Sterility Scan</h4>
-                  <p className="text-slate-400 text-[11px] font-light">Validation of microbial absence, endotoxin logs, and terminal shelf life tracking inside stability chambers.</p>
+                <div className="lg:col-span-2 flex flex-wrap gap-6 text-xs justify-between">
+                  {(settings.qaPhase1Title !== "" || settings.qaPhase1Desc !== "") && (
+                    <div className="flex-1 min-w-[150px] space-y-2 border-l border-slate-800 pl-0 sm:pl-6 first:border-0 first:pl-0">
+                      <span className="text-slate-500 font-mono text-[10px] uppercase font-bold">Phase 1: Input Testing</span>
+                      <h4 className="font-bold text-white">{settings.qaPhase1Title ?? 'Raw Material Assay'}</h4>
+                      <p className="text-slate-400 text-[11px] font-light">{settings.qaPhase1Desc ?? 'High performance liquid chromatography validation of incoming active ingredients (APIs).'}</p>
+                    </div>
+                  )}
+                  {(settings.qaPhase2Title !== "" || settings.qaPhase2Desc !== "") && (
+                    <div className="flex-1 min-w-[150px] space-y-2 border-l border-slate-800 pl-0 sm:pl-6 first:border-0 first:pl-0">
+                      <span className="text-slate-500 font-mono text-[10px] uppercase font-bold">Phase 2: In-Process Control</span>
+                      <h4 className="font-bold text-white">{settings.qaPhase2Title ?? 'Disintegration & Hardness'}</h4>
+                      <p className="text-slate-400 text-[11px] font-light">{settings.qaPhase2Desc ?? 'In-line dissolution logging of tablets and vials every 30 minutes inside manufacturing bays.'}</p>
+                    </div>
+                  )}
+                  {(settings.qaPhase3Title !== "" || settings.qaPhase3Desc !== "") && (
+                    <div className="flex-1 min-w-[150px] space-y-2 border-l border-slate-800 pl-0 sm:pl-6 first:border-0 first:pl-0">
+                      <span className="text-slate-500 font-mono text-[10px] uppercase font-bold">Phase 3: Final Release</span>
+                      <h4 className="font-bold text-white">{settings.qaPhase3Title ?? 'Stability & Sterility Scan'}</h4>
+                      <p className="text-slate-400 text-[11px] font-light">{settings.qaPhase3Desc ?? 'Validation of microbial absence, endotoxin logs, and terminal shelf life tracking inside stability chambers.'}</p>
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
+            )}
           </div>
         )}
 
@@ -2076,7 +2117,7 @@ export default function PublicPortal({
                       <CheckCircle2 className="h-10 w-10 text-teal-600 mx-auto mb-3" />
                       <h4 className="text-xs font-bold text-teal-800">Application Submitted</h4>
                       <p className="text-[11px] text-teal-700 mt-2 leading-relaxed">
-                        Your application dossier has been stored successfully inside the {settings.companyName || 'Pharmaceutical Enterprise'} CMS. Our regulatory head will review your references shortly.
+                        Your application dossier has been stored successfully inside the {settings.companyName ?? 'Pharmaceutical Enterprise'} CMS. Our regulatory head will review your references shortly.
                       </p>
                     </div>
                   ) : (
@@ -2182,7 +2223,7 @@ export default function PublicPortal({
         {activeTab === 'contact' && (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 fade-in-up">
             <div className="text-center max-w-2xl mx-auto mb-12">
-              <h1 className="font-display text-2xl font-bold text-slate-900">{settings.companyName || 'Pharmaceutical Enterprise'} Global Headquarters</h1>
+              <h1 className="font-display text-2xl font-bold text-slate-900">{settings.companyName ?? 'Pharmaceutical Enterprise'} Global Headquarters</h1>
               <p className="text-xs text-slate-500 mt-2">Connect directly with our regulatory offices, manufacturing planners, or regional sales managers.</p>
             </div>
 

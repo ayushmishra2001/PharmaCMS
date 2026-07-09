@@ -213,6 +213,7 @@ export default function AdminPanel({
   const [inquiryStatus, setInquiryStatus] = useState<'unread' | 'read' | 'closed'>('unread');
 
   // Site Settings form
+  const [settingsTab, setSettingsTab] = useState<'global' | 'branding' | 'seo' | 'homepage'>('global');
   const [settingsForm, setSettingsForm] = useState<SiteSettings>({ ...settings });
   const [logoDragActive, setLogoDragActive] = useState(false);
   const [logoUploadError, setLogoUploadError] = useState('');
@@ -1079,7 +1080,7 @@ export default function AdminPanel({
     <div className="min-h-screen bg-[#eef2f6] flex flex-col lg:flex-row">
       
       {/* 1. Left Sidebar CMS Controls */}
-      <aside className="w-full lg:w-64 bg-white text-slate-850 border-r border-slate-200/80 shrink-0">
+      <aside className="w-full lg:w-64 bg-white text-slate-850 border-r border-slate-200/80 shrink-0 lg:sticky lg:top-[94px] lg:h-[calc(100vh-94px)] lg:overflow-y-auto z-30">
         {/* User Identity Segment */}
         <div className="p-6 border-b border-slate-150 bg-slate-50">
           <div className="flex items-center space-x-3">
@@ -1146,7 +1147,7 @@ export default function AdminPanel({
       </aside>
 
       {/* 2. Main Administration Stage */}
-      <main className="flex-grow p-6 lg:p-8 overflow-y-auto">
+      <main className="flex-grow p-6 lg:p-8">
         
         {/* Operation Notifications */}
         {operationSuccess && (
@@ -2298,6 +2299,15 @@ export default function AdminPanel({
                   <Plus className="h-4 w-4" />
                   <span>{editingCert?.id ? 'Edit Certificate' : 'Add Certificate'}</span>
                 </button>
+                <button
+                  onClick={() => setCertsTab('qa_settings')}
+                  className={`px-3 py-1.5 rounded text-xs font-semibold tracking-wide uppercase transition-all flex items-center space-x-1 ${
+                    certsTab === 'qa_settings' ? 'bg-indigo-600 text-white' : 'bg-indigo-50 text-indigo-700 border border-indigo-200'
+                  }`}
+                >
+                  <Settings className="h-4 w-4" />
+                  <span>Testing Routine Settings</span>
+                </button>
               </div>
             </div>
 
@@ -2419,6 +2429,136 @@ export default function AdminPanel({
                   >
                     {submitting ? 'Saving...' : 'Save Certificate'}
                   </button>
+                </div>
+              </form>
+            )}
+
+            {certsTab === 'qa_settings' && (
+              <form onSubmit={handleSettingsSaveSubmit} className="bg-white rounded-xl border border-slate-200 p-6 shadow-custom-md max-w-4xl space-y-6">
+                <div className="flex justify-between items-center border-b border-slate-100 pb-3">
+                  <h3 className="font-display text-lg font-bold text-slate-900">
+                    Quality Testing Routine Section
+                  </h3>
+                  <button
+                    type="submit"
+                    disabled={isReadOnly || submitting}
+                    className="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-6 py-2 rounded shadow disabled:opacity-50 flex items-center"
+                  >
+                    <Save className="h-4 w-4 mr-2" />
+                    {submitting ? 'Saving...' : 'Save Routine Settings'}
+                  </button>
+                </div>
+                
+                <div className="bg-indigo-50/50 p-4 rounded-lg border border-indigo-100 mb-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 font-mono">Routine Title</label>
+                      <input
+                        type="text"
+                        value={settingsForm.qaTitle ?? ''}
+                        onChange={(e) => handleSettingsFormChange('qaTitle', e.target.value)}
+                        placeholder="E.g., Standard GMP Quality Testing Routine"
+                        className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-400"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 font-mono">Status Badge Text</label>
+                      <input
+                        type="text"
+                        value={settingsForm.qaBadge ?? ''}
+                        onChange={(e) => handleSettingsFormChange('qaBadge', e.target.value)}
+                        placeholder="E.g., 100% TESTING COMPLIANCE LOGS"
+                        className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-400"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 font-mono">Routine Description</label>
+                      <textarea
+                        rows={2}
+                        value={settingsForm.qaDesc ?? ''}
+                        onChange={(e) => handleSettingsFormChange('qaDesc', e.target.value)}
+                        placeholder="E.g., Our quality control lab performs rigorous assessment parameters..."
+                        className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-400"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* Phase 1 */}
+                  <div className="space-y-3 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <h4 className="font-bold text-xs text-slate-700 uppercase tracking-wider">Phase 1</h4>
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 font-mono">Title</label>
+                      <input
+                        type="text"
+                        value={settingsForm.qaPhase1Title ?? ''}
+                        onChange={(e) => handleSettingsFormChange('qaPhase1Title', e.target.value)}
+                        placeholder="E.g., Raw Material Assay"
+                        className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 font-mono">Description</label>
+                      <textarea
+                        rows={3}
+                        value={settingsForm.qaPhase1Desc ?? ''}
+                        onChange={(e) => handleSettingsFormChange('qaPhase1Desc', e.target.value)}
+                        placeholder="Phase 1 details..."
+                        className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Phase 2 */}
+                  <div className="space-y-3 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <h4 className="font-bold text-xs text-slate-700 uppercase tracking-wider">Phase 2</h4>
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 font-mono">Title</label>
+                      <input
+                        type="text"
+                        value={settingsForm.qaPhase2Title ?? ''}
+                        onChange={(e) => handleSettingsFormChange('qaPhase2Title', e.target.value)}
+                        placeholder="E.g., Disintegration & Hardness"
+                        className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 font-mono">Description</label>
+                      <textarea
+                        rows={3}
+                        value={settingsForm.qaPhase2Desc ?? ''}
+                        onChange={(e) => handleSettingsFormChange('qaPhase2Desc', e.target.value)}
+                        placeholder="Phase 2 details..."
+                        className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Phase 3 */}
+                  <div className="space-y-3 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <h4 className="font-bold text-xs text-slate-700 uppercase tracking-wider">Phase 3</h4>
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 font-mono">Title</label>
+                      <input
+                        type="text"
+                        value={settingsForm.qaPhase3Title ?? ''}
+                        onChange={(e) => handleSettingsFormChange('qaPhase3Title', e.target.value)}
+                        placeholder="E.g., Stability & Sterility Scan"
+                        className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1 font-mono">Description</label>
+                      <textarea
+                        rows={3}
+                        value={settingsForm.qaPhase3Desc ?? ''}
+                        onChange={(e) => handleSettingsFormChange('qaPhase3Desc', e.target.value)}
+                        placeholder="Phase 3 details..."
+                        className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none"
+                      />
+                    </div>
+                  </div>
                 </div>
               </form>
             )}
@@ -2591,20 +2731,48 @@ export default function AdminPanel({
 
         {/* SECTION 6: GLOBAL SETTINGS */}
         {activeSection === 'settings' && (
-          <div className="space-y-6 fade-in-up">
+          <div className="space-y-6">
             <div>
               <h1 className="font-display text-2xl font-bold text-slate-900">Global Site Coordinates</h1>
               <p className="text-xs text-slate-500 mt-1">Modify global corporate registries (CIN, drug license codes), headquarters addresses, and contact email logs.</p>
             </div>
 
-            <form onSubmit={handleSettingsSaveSubmit} className="bg-white rounded-xl border border-slate-200 p-6 shadow-custom-md max-w-3xl space-y-4">
-              <h3 className="font-display text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">Global Corporate settings</h3>
-
-              {!hasSettingsAccess && (
-                <div className="bg-amber-50 text-amber-800 text-[11px] p-3 rounded border border-amber-200">
-                  <strong>Notice:</strong> Your current role has read-only viewer permissions for settings. To execute changes, login as a Super Admin.
+            <form onSubmit={handleSettingsSaveSubmit} className="bg-white rounded-xl border border-slate-200 shadow-custom-md w-full relative">
+              {/* STICKY HEADER WITH PILLS AND SAVE BUTTON */}
+              <div className="sticky top-[94px] z-20 bg-white border-b border-slate-200 px-6 py-4 rounded-t-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex flex-wrap gap-2">
+                  <button type="button" onClick={() => setSettingsTab('global')} className={`px-4 py-2 text-xs font-bold rounded-full transition-colors ${settingsTab === 'global' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>Global & Legal</button>
+                  <button type="button" onClick={() => setSettingsTab('branding')} className={`px-4 py-2 text-xs font-bold rounded-full transition-colors ${settingsTab === 'branding' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>Branding & Assets</button>
+                  <button type="button" onClick={() => setSettingsTab('seo')} className={`px-4 py-2 text-xs font-bold rounded-full transition-colors ${settingsTab === 'seo' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>SEO & Metadata</button>
+                  <button type="button" onClick={() => setSettingsTab('homepage')} className={`px-4 py-2 text-xs font-bold rounded-full transition-colors ${settingsTab === 'homepage' ? 'bg-teal-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>Homepage Blocks</button>
                 </div>
-              )}
+                <div className="flex items-center gap-4">
+                  {!hasSettingsAccess && (
+                    <span className="text-[10px] text-amber-600 font-bold bg-amber-50 px-2 py-1 rounded">Read Only</span>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={!hasSettingsAccess || submitting}
+                    className="bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold px-6 py-2 rounded-full shadow disabled:opacity-50 whitespace-nowrap"
+                  >
+                    {submitting ? 'Updating...' : 'Save Configuration Changes'}
+                  </button>
+                </div>
+              </div>
+
+              {/* TAB CONTENT AREA */}
+              <div className="p-6 space-y-6">
+
+                {/* GLOBAL & LEGAL TAB */}
+                {settingsTab === 'global' && (
+                  <div className="space-y-6 animate-fade-in">
+                    <h3 className="font-display text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">Global Corporate settings</h3>
+
+                    {!hasSettingsAccess && (
+                      <div className="bg-amber-50 text-amber-800 text-[11px] p-3 rounded border border-amber-200">
+                        <strong>Notice:</strong> Your current role has read-only viewer permissions for settings. To execute changes, login as a Super Admin.
+                      </div>
+                    )}
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -2631,6 +2799,12 @@ export default function AdminPanel({
                 </div>
               </div>
 
+                  </div>
+                )}
+
+                {/* SEO TAB */}
+                {settingsTab === 'seo' && (
+                  <div className="space-y-6 animate-fade-in">
               <div className="mt-4 pt-4 border-t border-slate-100/50">
                 <h4 className="text-xs font-bold text-slate-700 uppercase font-mono tracking-widest mb-3">SEO & Metadata</h4>
                 <div className="grid grid-cols-2 gap-4">
@@ -2693,6 +2867,12 @@ export default function AdminPanel({
                 </div>
               </div>
 
+                  </div>
+                )}
+
+                {/* GLOBAL & LEGAL TAB (CONTINUED) */}
+                {settingsTab === 'global' && (
+                  <div className="space-y-6 animate-fade-in">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 font-mono">Dossier Response Email</label>
@@ -2766,6 +2946,12 @@ export default function AdminPanel({
                 </div>
               </div>
 
+                  </div>
+                )}
+
+                {/* BRANDING TAB */}
+                {settingsTab === 'branding' && (
+                  <div className="space-y-6 animate-fade-in">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 font-mono">Google Maps Embed URL</label>
@@ -2950,6 +3136,12 @@ export default function AdminPanel({
                 </div>
               </div>
 
+                  </div>
+                )}
+
+                {/* HOMEPAGE BLOCKS TAB */}
+                {settingsTab === 'homepage' && (
+                  <div className="space-y-6 animate-fade-in">
               {/* BRANDING & HERO CUSTOMIZATION */}
               <div className="border-t border-slate-100 pt-4 mt-6">
                 <h4 className="text-xs font-bold text-teal-600 uppercase tracking-wider mb-3">Homepage Branding & Hero Canvas</h4>
@@ -3832,17 +4024,9 @@ export default function AdminPanel({
                 </div>
               </div>
 
-              {hasSettingsAccess && (
-                <div className="flex justify-end pt-4 border-t border-slate-100">
-                  <button
-                    type="submit"
-                    disabled={isReadOnly || submitting}
-                    className="bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold px-6 py-2 rounded shadow disabled:opacity-50"
-                  >
-                    {submitting ? 'Updating...' : 'Save Configuration Changes'}
-                  </button>
-                </div>
-              )}
+                  </div>
+                )}
+              </div>
             </form>
           </div>
         )}

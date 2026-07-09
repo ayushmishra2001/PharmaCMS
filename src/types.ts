@@ -152,6 +152,15 @@ export interface SiteSettings {
   regulatoryFeature3Desc?: string;
   regulatoryFeature4Title?: string;
   regulatoryFeature4Desc?: string;
+  qaTitle?: string;
+  qaDesc?: string;
+  qaBadge?: string;
+  qaPhase1Title?: string;
+  qaPhase1Desc?: string;
+  qaPhase2Title?: string;
+  qaPhase2Desc?: string;
+  qaPhase3Title?: string;
+  qaPhase3Desc?: string;
   // Section visibility controls
   showHome?: boolean;
   showAbout?: boolean;

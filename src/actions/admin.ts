@@ -392,7 +392,27 @@ export async function saveSettings(settings: any) {
       'metric3_value', 'metric3_label', 'metric4_value', 'metric4_label', 
       'enable_hero_slider', 'hero_slides', 'show_certifications', 'show_facilities', 
       'show_timeline', 'show_leadership', 'show_gallery', 'seo_title', 
-      'seo_description', 'seo_keywords'
+      'seo_desc', 'about_subtitle', 'facilities_title', 'media_showcase_title',
+      'compliance_badge_text', 'regulatory_title', 'regulatory_desc',
+      'regulatory_feature1_title', 'regulatory_feature1_desc',
+      'regulatory_feature2_title', 'regulatory_feature2_desc',
+      'regulatory_feature3_title', 'regulatory_feature3_desc',
+      'regulatory_feature4_title', 'regulatory_feature4_desc',
+      'show_home', 'show_catalog', 'show_careers', 'show_contact', 
+      'show_home_hero', 'show_home_metrics', 'show_home_featured', 
+      'show_home_regulatory', 'show_home_distributor', 'show_about', 
+      'show_home_lab_preview', 'lab_title', 'lab_sterility_text', 'lab_temperature',
+      'lab_cardio_title', 'lab_cardio_active', 'lab_cardio_formula', 'lab_cardio_disintegration', 'lab_cardio_chroma', 'lab_cardio_structure', 'lab_cardio_status',
+      'lab_antibiotic_title', 'lab_antibiotic_active', 'lab_antibiotic_formula', 'lab_antibiotic_disintegration', 'lab_antibiotic_chroma', 'lab_antibiotic_structure', 'lab_antibiotic_status',
+      'lab_neuro_title', 'lab_neuro_active', 'lab_neuro_formula', 'lab_neuro_disintegration', 'lab_neuro_chroma', 'lab_neuro_structure', 'lab_neuro_status',
+      'hero_trust_point1', 'hero_trust_point2', 'hero_trust_point3', 'hero_trust_point4',
+      'featured_badge_text', 'featured_title', 'featured_desc',
+      'regulatory_badge_text', 'distributor_title', 'distributor_desc',
+      'hero_slider_interval', 'enable_hero_overlay', 'hero_overlay_strength',
+      'about_title', 'about_vision_title', 'about_vision_text', 
+      'about_mission_title', 'about_mission_text',
+      'qa_title', 'qa_desc', 'qa_badge', 'qa_phase1_title', 'qa_phase1_desc',
+      'qa_phase2_title', 'qa_phase2_desc', 'qa_phase3_title', 'qa_phase3_desc'
     ];
     
     const safeSettings: any = {};
@@ -403,14 +423,28 @@ export async function saveSettings(settings: any) {
     }
     safeSettings.id = '00000000-0000-0000-0000-000000000000';
     
-    const { error } = await supabase.from('site_settings').upsert(safeSettings);
+    const { error, data } = await supabase.from('site_settings').upsert(safeSettings).select();
+    
+    // Unconditional debug log to see what exactly is happening
+    try { 
+      require('fs').writeFileSync(
+        'd:/PharmaCMS/settings_debug.log', 
+        JSON.stringify({ 
+          incoming: settings, 
+          mapped: safeSettings, 
+          error, 
+          data 
+        }, null, 2)
+      ); 
+    } catch(e) {}
+
     if (!error) {
       await logAction('Updated Site Settings', 'settings', 'SiteSettings');
       revalidatePath('/');
       revalidatePath('/admin');
       return true;
     }
-    console.error(error);
+    console.error("SUPABASE UPSERT ERROR:", error);
     try { require('fs').writeFileSync('d:/PharmaCMS/settings_error.log', JSON.stringify({ error, dbSettings }, null, 2)); } catch(e) {}
     return false;
   });
