@@ -2456,7 +2456,7 @@ export default function AdminPanel({
                       <input
                         type="text"
                         value={settingsForm.qaTitle ?? ''}
-                        onChange={(e) => handleSettingsFormChange('qaTitle', e.target.value)}
+                        onChange={(e) => setSettingsForm({ ...settingsForm, qaTitle: e.target.value })}
                         placeholder="E.g., Standard GMP Quality Testing Routine"
                         className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-400"
                       />
@@ -2466,7 +2466,7 @@ export default function AdminPanel({
                       <input
                         type="text"
                         value={settingsForm.qaBadge ?? ''}
-                        onChange={(e) => handleSettingsFormChange('qaBadge', e.target.value)}
+                        onChange={(e) => setSettingsForm({ ...settingsForm, qaBadge: e.target.value })}
                         placeholder="E.g., 100% TESTING COMPLIANCE LOGS"
                         className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-400"
                       />
@@ -2476,7 +2476,7 @@ export default function AdminPanel({
                       <textarea
                         rows={2}
                         value={settingsForm.qaDesc ?? ''}
-                        onChange={(e) => handleSettingsFormChange('qaDesc', e.target.value)}
+                        onChange={(e) => setSettingsForm({ ...settingsForm, qaDesc: e.target.value })}
                         placeholder="E.g., Our quality control lab performs rigorous assessment parameters..."
                         className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none focus:border-indigo-400"
                       />
@@ -2493,7 +2493,7 @@ export default function AdminPanel({
                       <input
                         type="text"
                         value={settingsForm.qaPhase1Title ?? ''}
-                        onChange={(e) => handleSettingsFormChange('qaPhase1Title', e.target.value)}
+                        onChange={(e) => setSettingsForm({ ...settingsForm, qaPhase1Title: e.target.value })}
                         placeholder="E.g., Raw Material Assay"
                         className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none"
                       />
@@ -2503,7 +2503,7 @@ export default function AdminPanel({
                       <textarea
                         rows={3}
                         value={settingsForm.qaPhase1Desc ?? ''}
-                        onChange={(e) => handleSettingsFormChange('qaPhase1Desc', e.target.value)}
+                        onChange={(e) => setSettingsForm({ ...settingsForm, qaPhase1Desc: e.target.value })}
                         placeholder="Phase 1 details..."
                         className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none"
                       />
@@ -2518,7 +2518,7 @@ export default function AdminPanel({
                       <input
                         type="text"
                         value={settingsForm.qaPhase2Title ?? ''}
-                        onChange={(e) => handleSettingsFormChange('qaPhase2Title', e.target.value)}
+                        onChange={(e) => setSettingsForm({ ...settingsForm, qaPhase2Title: e.target.value })}
                         placeholder="E.g., Disintegration & Hardness"
                         className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none"
                       />
@@ -2528,7 +2528,7 @@ export default function AdminPanel({
                       <textarea
                         rows={3}
                         value={settingsForm.qaPhase2Desc ?? ''}
-                        onChange={(e) => handleSettingsFormChange('qaPhase2Desc', e.target.value)}
+                        onChange={(e) => setSettingsForm({ ...settingsForm, qaPhase2Desc: e.target.value })}
                         placeholder="Phase 2 details..."
                         className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none"
                       />
@@ -2543,7 +2543,7 @@ export default function AdminPanel({
                       <input
                         type="text"
                         value={settingsForm.qaPhase3Title ?? ''}
-                        onChange={(e) => handleSettingsFormChange('qaPhase3Title', e.target.value)}
+                        onChange={(e) => setSettingsForm({ ...settingsForm, qaPhase3Title: e.target.value })}
                         placeholder="E.g., Stability & Sterility Scan"
                         className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none"
                       />
@@ -2553,7 +2553,7 @@ export default function AdminPanel({
                       <textarea
                         rows={3}
                         value={settingsForm.qaPhase3Desc ?? ''}
-                        onChange={(e) => handleSettingsFormChange('qaPhase3Desc', e.target.value)}
+                        onChange={(e) => setSettingsForm({ ...settingsForm, qaPhase3Desc: e.target.value })}
                         placeholder="Phase 3 details..."
                         className="w-full bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs focus:outline-none"
                       />
