@@ -186,7 +186,7 @@ export default function AdminPanel({
   // Generic dual-tab active state for entities: 'view' or 'edit'
   const [productsTab, setProductsTab] = useState<'view' | 'edit'>('view');
   const [categoriesTab, setCategoriesTab] = useState<'view' | 'edit'>('view');
-  const [certsTab, setCertsTab] = useState<'view' | 'edit'>('view');
+  const [certsTab, setCertsTab] = useState<'view' | 'edit' | 'qa_settings'>('view');
   const [facilitiesTab, setFacilitiesTab] = useState<'view' | 'edit'>('view');
   const [jobsTab, setJobsTab] = useState<'view' | 'edit'>('view');
 
