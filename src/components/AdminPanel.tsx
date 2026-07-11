@@ -1473,7 +1473,7 @@ export default function AdminPanel({
               </div>
             )}
 
-            {/* DUAL-TAB SCREEN 2: EDIT/ADD PRODUCT WITH GEMINI COPILOT */}
+            {/* DUAL-TAB SCREEN 2: EDIT/ADD PRODUCT */}
             {productsTab === 'edit' && editingProduct && (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 bg-white rounded-xl border border-slate-200 p-6 shadow-custom-md">
                 
