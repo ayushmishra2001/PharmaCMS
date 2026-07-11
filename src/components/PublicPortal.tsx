@@ -504,7 +504,7 @@ export default function PublicPortal({
                           }}
                           className="bg-white hover:bg-light-cyan text-slate-950 font-bold px-8 py-4 rounded-xl text-xs tracking-widest uppercase shadow-xl shadow-black/25 hover:shadow-[0_0_30px_rgba(224,251,252,0.25)] hover:-translate-y-0.5 transition-all duration-300 flex items-center group cursor-pointer"
                         >
-                          <span>Explore Formulations Monograph</span>
+                          <span>Learn More</span>
                           <ArrowRight className="h-4 w-4 ml-3 transform group-hover:translate-x-1.5 transition-transform text-slate-900" />
                         </button>
                       )}
